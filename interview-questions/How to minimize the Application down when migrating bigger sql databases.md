@@ -6,7 +6,7 @@ Let’s go **deep dive** into strategies, including **copy-only backups**, log s
 
 ---
 
-# 🔹 Why downtime happens?
+### 🔹 Why downtime happens?
 
 * If you take a **full backup**, copy to Azure, and restore → downtime = time taken for:
 
@@ -18,7 +18,7 @@ For large DBs (hundreds of GBs → TBs), this can mean **hours of downtime** unl
 
 ---
 
-# 🔹 Strategies to Minimize Downtime
+### 🔹 Strategies to Minimize Downtime
 
 ### **1. Backup/Restore with COPY\_ONLY + Differential + Log Chain**
 
@@ -132,19 +132,17 @@ Do you want me to prepare a **step-by-step playbook** (with commands) for:
 
 —which is most useful in your scenario?
 
-Perfect 👍 Let’s build **two full playbooks** for **migrating large SQL databases to Azure SQL Managed Instance (MI)** with **minimal downtime**.
 
-I’ll prepare both approaches in **deep detail**:
 
 ---
 
-# 🟢 **Playbook 1: Log Shipping–Style Migration (Backup/Restore Chain)**
+### 🟢 **Playbook 1: Log Shipping–Style Migration (Backup/Restore Chain)**
 
 This is **DIY** method, no extra services needed, works with any SQL edition that supports backups.
 
 ---
 
-## 🔹 Step 1: Prepare
+#### 🔹 Step 1: Prepare
 
 1. Provision Azure SQL MI.
 2. Create a **storage account + Blob container** in Azure.
@@ -152,7 +150,7 @@ This is **DIY** method, no extra services needed, works with any SQL edition tha
 
 ---
 
-## 🔹 Step 2: Initial Full Backup (COPY\_ONLY)
+#### 🔹 Step 2: Initial Full Backup (COPY\_ONLY)
 
 On **on-prem** SQL Server:
 
@@ -170,7 +168,7 @@ azcopy copy "D:\Backup\MyDB_FULL.bak" "https://<storageaccount>.blob.core.window
 
 ---
 
-## 🔹 Step 3: Restore on Azure SQL MI (WITH NORECOVERY)
+#### 🔹 Step 3: Restore on Azure SQL MI (WITH NORECOVERY)
 
 On **Azure SQL MI**:
 
@@ -186,7 +184,7 @@ Database stays in **RESTORING** state.
 
 ---
 
-## 🔹 Step 4: Incremental Backups (Diff + Logs)
+#### 🔹 Step 4: Incremental Backups (Diff + Logs)
 
 On **on-prem** (while DB is live):
 
@@ -218,7 +216,7 @@ Repeat log backups every 5–15 minutes.
 
 ---
 
-## 🔹 Step 5: Final Cutover
+#### 🔹 Step 5: Final Cutover
 
 1. Stop application writes.
 2. Take final log backup:
@@ -242,13 +240,13 @@ Repeat log backups every 5–15 minutes.
 
 ---
 
-# 🟢 **Playbook 2: Azure DMS (Database Migration Service – Online Mode)**
+### 🟢 **Playbook 2: Azure DMS (Database Migration Service – Online Mode)**
 
 This is **Microsoft-managed**, best for **enterprise migrations** with **near-zero downtime**.
 
 ---
 
-## 🔹 Step 1: Prepare
+#### 🔹 Step 1: Prepare
 
 1. Provision **Azure DMS instance** in same region as MI.
 2. Ensure **network connectivity** between on-prem SQL and MI (via VPN or ExpressRoute).
@@ -256,14 +254,14 @@ This is **Microsoft-managed**, best for **enterprise migrations** with **near-ze
 
 ---
 
-## 🔹 Step 2: Pre-Migration Assessment
+#### 🔹 Step 2: Pre-Migration Assessment
 
 * Run **DMA (Data Migration Assistant)** tool → check compatibility issues.
 * Fix issues before migration.
 
 ---
 
-## 🔹 Step 3: Create Migration Project in DMS
+#### 🔹 Step 3: Create Migration Project in DMS
 
 1. In Azure Portal → Go to **DMS instance → New Migration Project**.
 2. Choose **Online Data Migration**.
@@ -272,7 +270,7 @@ This is **Microsoft-managed**, best for **enterprise migrations** with **near-ze
 
 ---
 
-## 🔹 Step 4: Select Databases
+#### 🔹 Step 4: Select Databases
 
 * Pick the databases to migrate.
 * DMS will:
@@ -283,14 +281,14 @@ This is **Microsoft-managed**, best for **enterprise migrations** with **near-ze
 
 ---
 
-## 🔹 Step 5: Continuous Synchronization
+#### 🔹 Step 5: Continuous Synchronization
 
 * DMS keeps syncing changes (inserts, updates, deletes) from on-prem to MI.
 * Monitor progress in portal.
 
 ---
 
-## 🔹 Step 6: Cutover (Final Switch)
+#### 🔹 Step 6: Cutover (Final Switch)
 
 1. Schedule downtime window.
 2. In DMS project, click **Stop App Writes** → ensure no active writes on source DB.
@@ -302,7 +300,7 @@ This is **Microsoft-managed**, best for **enterprise migrations** with **near-ze
 
 ---
 
-# 🔹 Comparison Table
+### 🔹 Comparison Table
 
 | Method                 | Pros                                                   | Cons                                        | Downtime |
 | ---------------------- | ------------------------------------------------------ | ------------------------------------------- | -------- |
