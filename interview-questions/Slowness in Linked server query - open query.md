@@ -1,4 +1,4 @@
-Great 👍 you’ve touched on a **classic SQL Server performance pain point**: **slowness with Linked Server queries / OPENQUERY**.
+**Classic SQL Server performance pain point**: **slowness with Linked Server queries / OPENQUERY**.
 Let’s break it down **deeply** — root causes, why it happens, and **ways to overcome it**.
 
 ---
