@@ -4,11 +4,11 @@
 
 ---
 
-### 🔎 **1. How to Handle Disk I/O Issues (Reactive Approach)**
+#### 🔎 **1. How to Handle Disk I/O Issues (Reactive Approach)**
 
 When Disk I/O is already a problem (slow queries, blocking, timeouts), you need to **identify the bottleneck** and mitigate impact.
 
-### Where to Check:
+#### Where to Check:
 
 * **Wait Stats** → look for I/O-related waits.
 
@@ -41,7 +41,7 @@ When Disk I/O is already a problem (slow queries, blocking, timeouts), you need 
 
 # 🔎 **2. How to Proactively Address Disk I/O Issues (Preventive Approach)**
 
-### Bullet Points – Proactive Measures:
+#### Bullet Points – Proactive Measures:
 
 * ✅ Place **Data, Log, and TempDB** on separate disks.
 * ✅ Enable **Instant File Initialization (IFI)** for data files (not logs).
@@ -81,7 +81,7 @@ Example output from `sys.dm_io_virtual_file_stats` (simulated):
 
 ---
 
-### 📚 **4. Use Case Example**
+#### 📚 **4. Use Case Example**
 
 **Scenario:**
 
