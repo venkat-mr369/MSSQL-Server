@@ -140,4 +140,106 @@ Then confirm Kerberos is used via `auth_scheme`.
 
 ---
 
+**Differences between Kerberos and NTLM in SQL Server**, and how they impact authentication, below you can find **practical use cases**.
+
+---
+
+## 🔑 **Kerberos vs NTLM in SQL Server Authentication**
+
+| Feature                | **NTLM**                                                               | **Kerberos**                                                                |
+| ---------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Auth Mechanism**     | Challenge/Response (client proves identity to server)                  | Ticket-based (client gets a Kerberos ticket from AD and presents it to SQL) |
+| **Dependency**         | Works without SPN                                                      | Requires correct SPN in AD                                                  |
+| **Delegation Support** | ❌ No delegation (cannot forward user credentials → “double hop” fails) | ✅ Supports delegation (user → middle-tier → SQL)                            |
+| **Security**           | Less secure, older protocol                                            | Stronger encryption, mutual authentication                                  |
+| **Performance**        | Extra round-trips, slower                                              | More efficient (tickets cached and reused)                                  |
+| **Common Scenario**    | Local logins, single-hop authentication                                | Domain environments, multi-hop (e.g., SSRS → SQL, Linked Servers)           |
+
+---
+
+## 📚 Use Cases
+
+### 🔹 **Use Case 1: Single-Hop Login (Client → SQL Server)**
+
+* **Setup**: User `John` on `ClientPC` connects directly to SQL Server `DevServer01`.
+* **SPN missing** → SQL falls back to **NTLM** → login works.
+* **SPN present & correct** → Kerberos is used → login also works.
+
+👉 **Impact**: For single-hop, both NTLM and Kerberos allow login, but Kerberos is faster and more secure.
+
+---
+
+### 🔹 **Use Case 2: Double-Hop (App Server → SQL Server)**
+
+* **Setup**: User `Alice` connects to **SSRS on AppServer01**, which needs to query SQL Server `DevServer01`.
+* **NTLM**:
+
+  * First hop: Alice → AppServer01 works.
+  * Second hop: AppServer01 → DevServer01 **fails** (NTLM can’t forward Alice’s identity).
+  * Error: `"Login failed for user NT AUTHORITY\ANONYMOUS LOGON"`.
+* **Kerberos**:
+
+  * Alice gets a Kerberos ticket from AD for `MSSQLSvc/DevServer01.example.com`.
+  * AppServer01 can delegate Alice’s identity to DevServer01 (if delegation is allowed).
+  * Query succeeds.
+
+👉 **Impact**: NTLM fails in double-hop; Kerberos solves it with SPNs + delegation.
+
+---
+
+### 🔹 **Use Case 3: Linked Servers**
+
+* **Setup**: Query in SQL Server A runs a linked server query to SQL Server B.
+* **NTLM**: SQL Server A cannot pass user credentials to B → connection fails.
+* **Kerberos**: With proper SPNs, A forwards the Kerberos ticket → B authenticates correctly.
+
+👉 **Impact**: Linked servers need Kerberos + SPNs.
+
+---
+
+### 🔹 **Use Case 4: AlwaysOn Availability Group Listener**
+
+* **Setup**: SQL clients connect to AG Listener `SQLListener.example.com`.
+* **NTLM**:
+
+  * Clients may connect, but delegation from listener to actual node fails.
+* **Kerberos**:
+
+  * SPN for `MSSQLSvc/SQLListener.example.com` registered → Kerberos tickets route properly.
+
+👉 **Impact**: For AG listeners and failover clusters, Kerberos with correct SPNs is mandatory.
+
+---
+
+## ✅ Quick Rule of Thumb
+
+* **NTLM is fine** if all users connect directly (single-hop).
+* **Kerberos is mandatory** for:
+
+  * SSRS / SSAS / middle-tier apps
+  * Linked Servers
+  * AG listeners / Failover clusters
+  * Environments requiring mutual authentication
+
+---
+
+⚡ Example with your setup:
+
+* Domain: `example.com`
+* SQL Service Account: `sqldb@example.com`
+* SQL Server: `DevServer01`
+
+If a developer on `DevPC01` connects to SQL:
+
+* With NTLM: Login works.
+* With Kerberos: Login works + more secure.
+
+If SSRS on `AppServer01` connects to SQL on behalf of the user:
+
+* With NTLM: Fails (`ANONYMOUS LOGON`).
+* With Kerberos + SPN: Works (delegation possible).
+
+---
+
+
 
