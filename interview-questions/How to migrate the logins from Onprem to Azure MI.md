@@ -185,7 +185,7 @@ Then map users:
 ALTER USER [app_user] WITH LOGIN = [app_user];
 ```
 
----
+---Note:- 
+**Mean to say Windows Logins (domain-based) must be migrated to Azure AD logins. has to do manually?** 
 
-
-Do you want me to also give you a **ready-to-use sp\_help\_revlogin script (updated for Azure MI)** so you don’t have to adapt manually?
+Yes, Windows (domain) logins require manual work because they must be converted into Azure AD logins. But if you use Azure AD groups, you only need to do the manual mapping once per group, and it will cover all synced users.
