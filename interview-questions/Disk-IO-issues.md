@@ -4,7 +4,7 @@
 
 ---
 
-# 🔎 **1. How to Handle Disk I/O Issues (Reactive Approach)**
+### 🔎 **1. How to Handle Disk I/O Issues (Reactive Approach)**
 
 When Disk I/O is already a problem (slow queries, blocking, timeouts), you need to **identify the bottleneck** and mitigate impact.
 
@@ -81,7 +81,7 @@ Example output from `sys.dm_io_virtual_file_stats` (simulated):
 
 ---
 
-# 📚 **4. Use Case Example**
+### 📚 **4. Use Case Example**
 
 **Scenario:**
 
