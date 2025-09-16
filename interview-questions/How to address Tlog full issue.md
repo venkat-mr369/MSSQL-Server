@@ -143,4 +143,7 @@ If truncation doesn’t happen → log keeps growing → eventually **full**.
 
 ---
 
-👉 Would you like me to prepare a **flowchart-style troubleshooting guide** for “T-log full” (step-by-step with decision points), so you can use it as a quick reference during incidents?
+Here’s the flowchart for troubleshooting T-log full issues in SQL Server. It gives you a step-by-step decision path — from detecting the cause (LOG_BACKUP, ACTIVE_TRANSACTION, REPLICATION, or disk issues) to the proper fix and long-term prevention.
+
+<img width="1589" height="1934" alt="image" src="https://github.com/user-attachments/assets/3eeb117b-662e-4067-a703-3d9e7e0fb775" />
+
