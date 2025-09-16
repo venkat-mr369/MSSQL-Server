@@ -1,4 +1,5 @@
 **how to address a Disk Full issue** in SQL Server. 
+
 This is a common and critical problem, since when disks are full, SQL Server can’t grow data files, 
 write to transaction logs, or even store tempdb activity. 
 
