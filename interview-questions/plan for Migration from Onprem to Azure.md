@@ -1,4 +1,6 @@
-Excellent question 👍 — planning a **migration from On-Prem SQL Server to Azure** is a **big exercise**, and it must be approached like a **project** with multiple stages (assessment → planning → migration → validation → optimization). I’ll give you a **deep-dive migration framework** with **step-by-step phases, decision points, tools, risks, and best practices**.
+**migration from On-Prem SQL Server to Azure** is a **big exercise**, and it must be approached like a **project** with multiple stages (assessment → planning → migration → validation → optimization). 
+
+I’ll give you a **deep-dive migration framework** with **step-by-step phases, decision points, tools, risks, and best practices**.
 
 ---
 
