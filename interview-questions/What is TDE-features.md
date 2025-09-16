@@ -2,7 +2,7 @@
 
 ***What type of certificate used for TDE?***
 
-**deep dive into TDE (Transparent Data Encryption)** in SQL Server For 2016 Standard Editon also. 
+****Deep dive into TDE (Transparent Data Encryption)** in SQL Server For 2016 Standard Editon**** 
 ---
 
 # 🔎 What is TDE?
