@@ -8,13 +8,13 @@ Let’s break it down carefully:
 
 ---
 
-# 🔹 **ACID Properties in SQL Server with Examples**
+### 🔹 **ACID Properties in SQL Server with Examples**
 
 ACID = **Atomicity, Consistency, Isolation, Durability**
 
 ---
 
-## 1. **Setup: Employee Table**
+#### 1. **Setup: Employee Table**
 
 ```sql
 CREATE TABLE Employee (
@@ -39,13 +39,13 @@ Now we have 3 employees:
 
 ---
 
-## 2. **Atomicity Example (All or Nothing)**
+#### 2. **Atomicity Example (All or Nothing)**
 
 👉 **Definition:** A transaction is atomic → either all operations succeed or none.
 
 **Case:** Increase Devi’s salary to 15,000 and Jaanu’s to 20,000 **together**. If one fails, rollback both.
 
-### sunil\_sessionwindow1
+#### sunil\_sessionwindow1
 
 ```sql
 BEGIN TRANSACTION;
@@ -63,7 +63,7 @@ ROLLBACK; -- Undo if any step fails
 
 ---
 
-## 3. **Consistency Example (Valid State Transition)**
+#### 3. **Consistency Example (Valid State Transition)**
 
 👉 **Definition:** Data must move from one **valid state** to another. Constraints (PK, FK, CHECK) enforce this.
 
@@ -74,7 +74,7 @@ ALTER TABLE Employee
 ADD CONSTRAINT chk_salary CHECK (Salary > 5000);
 ```
 
-### sunil\_sessionwindow1
+#### sunil\_sessionwindow1
 
 ```sql
 BEGIN TRANSACTION;
@@ -87,7 +87,7 @@ COMMIT;
 
 ---
 
-## 4. **Isolation Example (Concurrent Transactions)**
+#### 4. **Isolation Example (Concurrent Transactions)**
 
 👉 **Definition:** Multiple transactions should not interfere with each other. Levels = READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE, SNAPSHOT.
 
@@ -169,7 +169,7 @@ COMMIT;
 
 ---
 
-# 🔹 **Summary**
+### 🔹 **Summary**
 
 * **Atomicity:** All-or-nothing (Rollback on error).
 * **Consistency:** DB rules always maintained.
@@ -177,13 +177,13 @@ COMMIT;
 * **Durability:** Committed changes survive crash.
 
 ---
-Perfect 👍 Now let’s **deep dive into REPEATABLE READ, SERIALIZABLE, and SNAPSHOT isolation levels** in SQL Server using our **Employee table** (`Sriram, Devi, Jaanu`).
+**Deep dive into REPEATABLE READ, SERIALIZABLE, and SNAPSHOT isolation levels** in SQL Server using our **Employee table** (`Sriram, Devi, Jaanu`).
 
 We’ll again use **two sessions** (`sunil_sessionwindow1` and `sunil_sessionwindow2`) so you can run these step by step in SSMS.
 
 ---
 
-# 🔹 Step 1: Verify Table Setup
+### 🔹 Step 1: Verify Table Setup
 
 Run once:
 
@@ -427,7 +427,7 @@ This places a **range lock**, blocking inserts into the qualifying range until T
 
 ---
 
-## 🛠️ Step 1: Table Setup
+#### 🛠️ Step 1: Table Setup
 
 Run this only once:
 
@@ -446,7 +446,7 @@ INSERT INTO Employee VALUES
 
 ---
 
-## 🖥️ Session 1 → `sunil_sessionwindow1`
+#### 🖥️ Session 1 → `sunil_sessionwindow1`
 
 ```sql
 -- Use default READ COMMITTED isolation level (phantoms allowed)
@@ -462,7 +462,7 @@ SELECT * FROM Employee WHERE Salary > 10000;
 
 ---
 
-## 🖥️ Session 2 → `sunil_sessionwindow2`
+#### 🖥️ Session 2 → `sunil_sessionwindow2`
 
 ```sql
 BEGIN TRANSACTION;
@@ -475,7 +475,7 @@ COMMIT;  -- commit immediately so session1 can see it
 
 ---
 
-## 🖥️ Back to Session 1 → `sunil_sessionwindow1`
+#### 🖥️ Back to Session 1 → `sunil_sessionwindow1`
 
 ```sql
 -- Re-run the same query
@@ -487,7 +487,7 @@ SELECT * FROM Employee WHERE Salary > 10000;
 
 ---
 
-## 🔒 Prevent Phantom Read (Serializable)
+#### 🔒 Prevent Phantom Read (Serializable)
 
 If you want to block `sunil_sessionwindow2` from inserting until `sunil_sessionwindow1` finishes:
 
