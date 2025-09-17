@@ -421,5 +421,98 @@ SELECT * FROM Employee WHERE Salary > 10000;
 This places a **range lock**, blocking inserts into the qualifying range until T1 finishes.
 
 ---
+ **Phantom Read example** again but this time with **`sunil_sessionwindow1`** and **`sunil_sessionwindow2`** 
+ 
+ so you can simulate it in SQL Server Management Studio (SSMS) by opening two query windows.
+
+---
+
+## 🛠️ Step 1: Table Setup
+
+Run this only once:
+
+```sql
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50),
+    Salary INT
+);
+
+INSERT INTO Employee VALUES
+(1, 'Sriram', 10000),
+(2, 'Devi', 12000),
+(3, 'Jaanu', 18000);
+```
+
+---
+
+## 🖥️ Session 1 → `sunil_sessionwindow1`
+
+```sql
+-- Use default READ COMMITTED isolation level (phantoms allowed)
+-- Transaction starts
+BEGIN TRANSACTION;
+
+-- First read
+SELECT * FROM Employee WHERE Salary > 10000;
+-- Expected: Devi (12000), Jaanu (18000)
+
+-- Keep transaction open, don’t commit yet
+```
+
+---
+
+## 🖥️ Session 2 → `sunil_sessionwindow2`
+
+```sql
+BEGIN TRANSACTION;
+
+-- Insert a new employee who qualifies for the same condition
+INSERT INTO Employee VALUES (4, 'Kiran', 15000);
+
+COMMIT;  -- commit immediately so session1 can see it
+```
+
+---
+
+## 🖥️ Back to Session 1 → `sunil_sessionwindow1`
+
+```sql
+-- Re-run the same query
+SELECT * FROM Employee WHERE Salary > 10000;
+
+-- Now result includes:
+-- Devi (12000), Jaanu (18000), and 👻 Phantom row Kiran (15000)
+```
+
+---
+
+## 🔒 Prevent Phantom Read (Serializable)
+
+If you want to block `sunil_sessionwindow2` from inserting until `sunil_sessionwindow1` finishes:
+
+### Session 1 (`sunil_sessionwindow1`)
+
+```sql
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN TRANSACTION;
+
+SELECT * FROM Employee WHERE Salary > 10000;
+-- Locks the range so no phantom inserts allowed
+```
+
+### Session 2 (`sunil_sessionwindow2`)
+
+```sql
+BEGIN TRANSACTION;
+INSERT INTO Employee VALUES (5, 'Ravi', 16000);
+-- This will block until Session 1 commits/rollbacks
+```
+
+---
+
+✅ That’s a **true Phantom Read** demo with two windows (`sunil_sessionwindow1`, `sunil_sessionwindow2`).
+
+
 
 
