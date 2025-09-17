@@ -277,6 +277,8 @@ T7: Node2 + Node3 redo log into data pages
 * **Client always waits for Node2’s ACK but not Node3’s.**
 
 ---
+
+```bash
 App
  |
  v        (T1) Client Sends Transaction
@@ -308,4 +310,4 @@ Node1 waits for ACK from Node2
  |
  v
 Now both Node1 and Node2 have the data safely; Node3 might be behind slightly.
-
+```
