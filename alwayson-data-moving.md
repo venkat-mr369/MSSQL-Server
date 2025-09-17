@@ -270,10 +270,42 @@ T7: Node2 + Node3 redo log into data pages
 
 ---
 
-✅ **Key Understanding**
+✅ **Key Note**
 
 * **Node2 (sync):** Guarantees durability → no data loss.
 * **Node3 (async):** Faster for Node1, but may lag → possible data loss during DR failover.
 * **Client always waits for Node2’s ACK but not Node3’s.**
 
 ---
+App
+ |
+ v        (T1) Client Sends Transaction
+Node1 (Primary - East)
+ |  (T2) Log Record Creation (in memory, Log Buffer)
+ v
+--------------------------
+| T3.1: Send Log Block --> Node2 (East, Sync-Secondary)
+| T3.2: Send Log Block --> Node3 (West, Async-Secondary)
+--------------------------
+       |                            |
+       v                            v
+Node2 (Sync)                    Node3 (Async)
+|                                 |
+v                                 v
+(T4) Harden Log                  (T5) Buffer Log (redo queue)
+(on disk)                         (in memory/disk)
+|                                 |
+v                                 |
+(T4b) Send ACK  ------------------|
+        |                                  
+        |<-------------------------------
+        |  (ACK sent once log is hardened)
+        |
+Node1 waits for ACK from Node2
+ |
+ v
+(T6) Node1 commits transaction, returns "Committed" to App
+ |
+ v
+Now both Node1 and Node2 have the data safely; Node3 might be behind slightly.
+
