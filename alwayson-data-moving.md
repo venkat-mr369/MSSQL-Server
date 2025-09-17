@@ -1,5 +1,4 @@
-Got it 👍
-You want a **step-by-step assessment plan** for SQL Server **Always On Availability Groups (AG)** with this setup:
+**step-by-step assessment plan** for SQL Server **Always On Availability Groups (AG)** with this setup:
 
 * **Region 1 (East)**
 
@@ -11,11 +10,11 @@ You want a **step-by-step assessment plan** for SQL Server **Always On Availabil
   * **Node3** (DR – asynchronous commit, manual failover)
 
 This is a **classic high availability + disaster recovery (HA+DR)** design.
-I’ll break the **assessment steps** into **phases** with **deep details**, so you can map Node1, Node2, and Node3 properly.
+we will break the **assessment steps** into **phases** with **in-depth details**, so we can map Node1, Node2, and Node3 properly.
 
 ---
 
-## 🔍 General Steps for Assessment (Detailed)
+## 🔍 General Steps for Assessment ()
 
 ### **1. Infrastructure & Network Assessment**
 
@@ -25,7 +24,7 @@ I’ll break the **assessment steps** into **phases** with **deep details**, so 
   * Check CPU, RAM, Storage IOPS.
   * Ensure local disks are high performance (SSD/NVMe).
 
-* **Node2 (East – HA Partner)**
+* **Node2 (East – HA Secondary)**
 
   * Same build/version as Node1.
   * Network latency between Node1 and Node2 must be **<1ms** for synchronous commit.
@@ -155,9 +154,9 @@ I’ll break the **assessment steps** into **phases** with **deep details**, so 
 
 ---
 
-## 🕒 Transaction Timeline Example
+### 🕒 Transaction Timeline Example
 
-### 🟢 **Scenario**: An application inserts a record
+#### 🟢 **Scenario**: An application inserts a record
 
 ```sql
 INSERT INTO Orders (OrderID, Item) VALUES (1001, 'Laptop');
