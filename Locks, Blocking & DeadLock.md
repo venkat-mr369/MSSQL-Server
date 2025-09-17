@@ -27,7 +27,7 @@
 
 ---
 
-# 🔒 Types of Locks (Simplified)
+### 🔒 Types of Locks 
 
 | Lock Type                       | Purpose                                                                                        | Example Use Case                                                      |
 | ------------------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -39,7 +39,7 @@
 
 ---
 
-# ⚡ Examples with Your `Employee` Table
+### ⚡ Examples with Your `Employee` Table
 
 ```sql
 CREATE TABLE Employee (
@@ -56,7 +56,7 @@ INSERT INTO Employee VALUES
 
 ---
 
-## ✅ Example 1: **Shared Lock (S)**
+### ✅ Example 1: **Shared Lock (S)**
 
 Transaction 1:
 
@@ -76,7 +76,7 @@ SELECT * FROM Employee WHERE EmpID = 1; -- Allowed, shared lock compatible
 
 ---
 
-## ✅ Example 2: **Exclusive Lock (X) & Blocking**
+### ✅ Example 2: **Exclusive Lock (X) & Blocking**
 
 Transaction 1:
 
@@ -96,7 +96,7 @@ SELECT * FROM Employee WHERE EmpID = 1; -- BLOCKED until T1 commits/rolls back
 
 ---
 
-## ✅ Example 3: **Update Lock (U)**
+### ✅ Example 3: **Update Lock (U)**
 
 Transaction 1:
 
@@ -110,7 +110,7 @@ UPDATE Employee SET Salary = Salary + 1000 WHERE EmpID = 2;
 
 ---
 
-## ✅ Example 4: **Intent Locks**
+### ✅ Example 4: **Intent Locks**
 
 When you update a row:
 
@@ -125,7 +125,7 @@ UPDATE Employee SET Salary = 25000 WHERE EmpID = 3;
 
 ---
 
-## ✅ Example 5: **Deadlock**
+### ✅ Example 5: **Deadlock**
 
 Transaction 1:
 
@@ -150,7 +150,7 @@ SQL Server chooses one transaction as a **victim**.
 
 ---
 
-# 📊 Summary of Differences
+### 📊 Summary of Differences
 
 | Concept      | Definition                             | Outcome                                   |
 | ------------ | -------------------------------------- | ----------------------------------------- |
