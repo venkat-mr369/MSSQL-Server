@@ -1,5 +1,5 @@
-## T-SQL & Performance Tuning — In-Depth Interview Questions
-## SQL Server All Versions: 2008 → 2012 → 2014 → 2016 → 2017 → 2019 → 2022 → 2025
+### T-SQL & Performance Tuning — In-Depth Interview Questions
+### SQL Server All Versions: 2008 → 2012 → 2014 → 2016 → 2017 → 2019 → 2022 → 2025
 
 > **150+ Questions with Detailed Answers**
 > For Sr DBA / Database Developer / Performance Engineer Interviews
@@ -7,11 +7,11 @@
 ---
 ---
 
-## SECTION A: T-SQL FUNDAMENTALS & ADVANCED
+### SECTION A: T-SQL FUNDAMENTALS & ADVANCED
 
 ---
 
-## A1. Core T-SQL Concepts
+### A1. Core T-SQL Concepts
 
 ### Q1. What is the difference between WHERE and HAVING clause?
 
@@ -368,7 +368,7 @@ OUTPUT $action, INSERTED.*, DELETED.*;  -- track what happened
 
 ---
 
-## A2. T-SQL Version-Specific Features
+### A2. T-SQL Version-Specific Features
 
 ### Q11. What T-SQL features were introduced in each SQL Server version?
 
@@ -814,11 +814,11 @@ END;
 ---
 ---
 
-# SECTION B: PERFORMANCE TUNING — DEEP DIVE
+### SECTION B: PERFORMANCE TUNING — DEEP DIVE
 
 ---
 
-## B1. Indexing Strategy
+### B1. Indexing Strategy
 
 ### Q22. Explain the types of indexes in SQL Server.
 
@@ -958,7 +958,7 @@ ON orders (order_date, customer_id, total_amount);
 
 ---
 
-## B2. Query Execution Plans
+### B2. Query Execution Plans
 
 ### Q26. How do you read an execution plan? What are the key things to look for?
 
@@ -1180,7 +1180,7 @@ ORDER BY internal_alloc_mb DESC;
 
 ---
 
-## B4. Query Store (SQL 2016+)
+### B4. Query Store (SQL 2016+)
 
 ### Q30. Explain Query Store and how it helps with performance tuning.
 
@@ -1226,7 +1226,7 @@ EXEC sp_query_store_set_hints @query_id = 55, @query_hints = N'OPTION(MAXDOP 4)'
 
 ---
 
-## B5. Intelligent Query Processing (SQL 2017-2022)
+### B5. Intelligent Query Processing (SQL 2017-2022)
 
 ### Q31. Explain the Intelligent Query Processing features across versions.
 
@@ -1276,7 +1276,7 @@ EXEC sp_query_store_set_hints @query_id = 55, @query_hints = N'OPTION(MAXDOP 4)'
 
 ---
 
-## B6. Statistics & Cardinality Estimation
+### B6. Statistics & Cardinality Estimation
 
 ### Q32. Explain Statistics in SQL Server and how they affect performance.
 
@@ -1315,7 +1315,7 @@ ALTER DATABASE mydb SET AUTO_UPDATE_STATISTICS_ASYNC ON;
 
 ---
 
-## B7. Tempdb Optimization
+### B7. Tempdb Optimization
 
 ### Q33. How do you optimize Tempdb?
 
@@ -1369,7 +1369,7 @@ FROM sys.dm_db_file_space_usage;
 
 ---
 
-## B9. In-Memory OLTP (Hekaton)
+### B9. In-Memory OLTP (Hekaton)
 
 ### Q35. Explain In-Memory OLTP (SQL 2014+).
 
@@ -1400,7 +1400,7 @@ END;
 
 ---
 
-## B10. Accelerated Database Recovery (SQL 2019+)
+### B10. Accelerated Database Recovery (SQL 2019+)
 
 ### Q36. What is Accelerated Database Recovery (ADR)?
 
@@ -1422,7 +1422,7 @@ ALTER DATABASE mydb SET ACCELERATED_DATABASE_RECOVERY = ON;
 
 ---
 
-## B11. MAXDOP & Cost Threshold for Parallelism
+### B11. MAXDOP & Cost Threshold for Parallelism
 
 ### Q37. What are the recommended MAXDOP and CTFP settings?
 
@@ -1462,7 +1462,7 @@ ALTER DATABASE SCOPED CONFIGURATION SET DOP_FEEDBACK = ON;
 
 ---
 
-## B12. Performance Tuning Checklist
+### B12. Performance Tuning Checklist
 
 ### Q38. What is your approach to tuning a slow SQL Server?
 
