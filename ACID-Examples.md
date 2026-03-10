@@ -122,7 +122,7 @@ Now T2 will see the updated salary.
 
 ---
 
-## 5. **Durability Example (Changes Survive Crash)**
+### 5. **Durability Example (Changes Survive Crash)**
 
 👉 **Definition:** Once committed, data is permanent (even after crash/restart).
 
@@ -139,7 +139,7 @@ Even if server crashes → upon restart, log is replayed → Devi’s salary rem
 
 ---
 
-# 🔹 **Use Case Demo with Names**
+### 🔹 **Use Case Demo with Names**
 
 ### Before Transaction
 
