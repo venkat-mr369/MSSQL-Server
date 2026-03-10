@@ -7,7 +7,7 @@
 
 ---
 
-# 1️⃣ Setup
+### 1️⃣ Setup
 
 ```sql
 USE tempdb;
@@ -30,7 +30,7 @@ INSERT INTO Employee VALUES
 
 ---
 
-# 2️⃣ Blocking Example
+### 2️⃣ Blocking Example
 
 ⚡ Open **two query windows** in SSMS.
 
@@ -61,7 +61,7 @@ COMMIT;
 
 ---
 
-# 3️⃣ Deadlock Example
+### 3️⃣ Deadlock Example
 
 ⚡ Again use **two query windows**.
 
@@ -93,7 +93,7 @@ Transaction (Process ID 52) was deadlocked on resources...
 
 ---
 
-# 4️⃣ Monitoring Locks & Blocking
+### 4️⃣ Monitoring Locks & Blocking
 
 You can see what’s happening under the hood.
 
@@ -127,7 +127,7 @@ DBCC OPENTRAN;
 
 ---
 
-# 🔎 Expected Observations
+### 🔎 Expected Observations
 
 * **Blocking** → Second session waits until first session commits.
 * **Deadlock** → One transaction gets killed, the other continues.
