@@ -1,9 +1,9 @@
-### compare **TDE certificates** vs **SSL/TLS certificates** in SQL Server:
+### Compare **TDE certificates** vs **SSL/TLS certificates** in SQL Server:
 
 
 ---
 
-# 🧭 Short summary 
+### 🧭 Short summary 
 
 * **TDE certificate (X.509 inside SQL master)** → used **by SQL Server to protect the database encryption key (DEK)** and therefore **protects data at rest** (MDF/LDF/backups).
 * **SSL/TLS certificate (X.509 in Windows cert store)** → used to **secure client ↔ server network traffic** (encryption in transit) and to support trust/hostname matching for connections.
@@ -194,7 +194,7 @@ openssl s_client -connect sql1.corp.example.com:1433
 
 ---
 
-# 4) Key lifecycle & rotation (TDE vs TLS)
+### 4) Key lifecycle & rotation (TDE vs TLS)
 
 ### TDE certificate rotation (recommended process)
 
@@ -230,14 +230,14 @@ openssl s_client -connect sql1.corp.example.com:1433
 
 ---
 
-# 5) Performance & operational differences
+### 5) Performance & operational differences
 
 * **TDE performance:** small CPU overhead for encryption/decryption of pages (symmetric AES). Typically modest on modern CPUs; measure baseline. TDE does not encrypt in-memory data nor network traffic.
 * **TLS performance:** small CPU overhead for TLS handshakes and symmetric encryption of each TCP session. With many short-lived connections, handshake cost can be noticeable; connection pooling mitigates this.
 
 ---
 
-# 6) Best Practices (bullet points)
+### 6) Best Practices (bullet points)
 
 **TDE**
 
@@ -258,7 +258,7 @@ openssl s_client -connect sql1.corp.example.com:1433
 
 ---
 
-# 7) Troubleshooting common errors
+### 7) Troubleshooting common errors
 
 **TDE restore error**
 
@@ -276,7 +276,7 @@ openssl s_client -connect sql1.corp.example.com:1433
 
 ---
 
-# 8) Practical use cases (concrete)
+### 8) Practical use cases (concrete)
 
 ### Use Case A — Compliance & backup protection (TDE)
 
@@ -292,7 +292,7 @@ openssl s_client -connect sql1.corp.example.com:1433
 
 ---
 
-# 9) Quick checklist for Prod → Dev backup workflow (TDE)
+### 9) Quick checklist for Prod → Dev backup workflow (TDE)
 
 1. On **ProdServer1**: BACKUP CERTIFICATE + PRIVATE KEY (store securely).
 2. On **ProdServer1**: BACKUP DATABASE (TDE will encrypt it).
@@ -303,7 +303,7 @@ openssl s_client -connect sql1.corp.example.com:1433
 
 ---
 
-# 10) Useful queries & sample outputs
+### 10) Useful queries & sample outputs
 
 **List SQL certificates in master**
 
@@ -334,7 +334,7 @@ LEFT JOIN sys.certificates c
 
 ---
 
-# final point for interview 
+### final points for interview 
 
 * **TDE cert** = protects **data at rest** (stored in SQL master). Must be backed up and carried when moving backups across servers.
 * **SSL/TLS cert** = protects **data in transit** (stored in Windows cert store). Clients must trust its issuer and hostname.
