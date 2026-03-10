@@ -2,7 +2,7 @@
 
 ---
 
-# 🏗 Sample Setup Details
+### 🏗 Example Setup Details
 
 * **Domain:** `corp.example.com`
 * **Servers:**
@@ -20,7 +20,7 @@
 
 ---
 
-# 🔀 Arrow-Based AOAG Flow Diagram (Text-Based)
+### 🔀 Arrow-Based AOAG Flow Diagram (Text-Based)
 
 ```
                   ┌───────────────────────────┐
@@ -64,7 +64,7 @@
 
 ---
 
-# 🔎 How it Works (Simple English)
+### 🔎 How it Works (Simple English)
 
 1. Applications connect to **`SalesListener.corp.example.com` (192.168.10.50)**, not directly to servers.
 2. Listener routes connections to the **current Primary Replica (SQLNode1)**.
@@ -79,7 +79,7 @@
 
 ---
 
-# ✅ Use Case Example
+### ✅ Use Case Example
 
 * **Company:** `corp.example.com` runs a banking application.
 * **Normal state:**
@@ -106,9 +106,9 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-# 🛠 AOAG Failover Walkthrough
+### 🛠 AOAG Failover Walkthrough
 
-## 🔹 Setup Recap
+### 🔹 Setup Recap
 
 * **Domain:** `corp.example.com`
 * **AG Name:** `SalesAG`
@@ -122,7 +122,7 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-## 🔹 Step 1: Normal Operation
+### 🔹 Step 1: Normal Operation
 
 * Users/applications connect to `SalesListener.corp.example.com:1433`.
 * Listener routes traffic to **SQLNode1 (Primary)**.
@@ -133,7 +133,7 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-## 🔹 Step 2: Primary Fails (SQLNode1 Crash)
+### 🔹 Step 2: Primary Fails (SQLNode1 Crash)
 
 * Suppose `SQLNode1` goes down (hardware failure, service crash, OS restart).
 * **Windows Server Failover Cluster (WSFC)** detects node unavailability via cluster heartbeat.
@@ -143,7 +143,7 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-## 🔹 Step 3: Automatic Failover to Secondary
+### 🔹 Step 3: Automatic Failover to Secondary
 
 * WSFC promotes `SQLNode2` (synchronous secondary) to **Primary role**.
 * AG metadata updated → `SQLNode2` is now Primary.
@@ -154,7 +154,7 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-## 🔹 Step 4: Application Resumes
+### 🔹 Step 4: Application Resumes
 
 * New writes/reads now happen on `SQLNode2`.
 * `SQLNode3` continues to receive log blocks asynchronously from `SQLNode2` (new Primary).
@@ -164,7 +164,7 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-## 🔹 Step 5: Recovery of SQLNode1
+### 🔹 Step 5: Recovery of SQLNode1
 
 * DBA brings `SQLNode1` back online.
 * It rejoins cluster as a Secondary replica.
@@ -175,7 +175,7 @@ I’ll show you **what happens before, during, and after failover** — in simpl
 
 ---
 
-# 🔀 Arrow-Based Failover Flow
+### 🔀 Arrow-Based Failover Flow
 
 **Before Failure**
 
@@ -195,7 +195,7 @@ Clients → SalesListener (192.168.10.50) → SQLNode2 (Now Primary)
 
 ---
 
-# 📚 Use Case Example
+### 📚 Use Case Example
 
 **Banking Application (corp.example.com)**
 
@@ -207,7 +207,7 @@ Clients → SalesListener (192.168.10.50) → SQLNode2 (Now Primary)
 
 ---
 
-# ✅ Summary
+### ✅ Summary
 
 * **Failover is automatic** if synchronous replicas exist.
 * **Listener IP** shifts automatically, no client-side change needed.
