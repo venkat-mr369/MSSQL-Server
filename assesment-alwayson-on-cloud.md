@@ -15,7 +15,7 @@ I’ll break the **assessment steps** into **phases** with **deep details**, so 
 
 ---
 
-## 🔍 General Steps for Assessment (Detailed)
+### 🔍 General Steps for Assessment (Cloud Environment)
 
 ### **1. Infrastructure & Network Assessment**
 
