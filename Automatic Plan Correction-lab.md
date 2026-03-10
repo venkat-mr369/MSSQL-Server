@@ -8,7 +8,7 @@ This demo will show:
 
 ---
 
-# 🛠 Step 1: Prepare Demo Database
+### 🛠 Step 1: Prepare Demo Database
 
 ```sql
 USE master;
@@ -24,7 +24,7 @@ GO
 
 ---
 
-# 🛠 Step 2: Create Table & Load Data
+### 🛠 Step 2: Create Table & Load Data
 
 We’ll create a skewed table where some values are rare, others common.
 
@@ -55,7 +55,7 @@ GO
 
 ---
 
-# 🛠 Step 3: Enable Query Store & Automatic Plan Correction
+### 🛠 Step 3: Enable Query Store & Automatic Plan Correction
 
 ```sql
 ALTER DATABASE APC_Demo SET QUERY_STORE = ON;
@@ -65,7 +65,7 @@ SET AUTOMATIC_TUNING ( FORCE_LAST_GOOD_PLAN = ON );
 
 ---
 
-# 🛠 Step 4: Run Query with Parameter Sniffing
+### 🛠 Step 4: Run Query with Parameter Sniffing
 
 ```sql
 -- This query parameterized will sniff first execution
@@ -85,7 +85,7 @@ GO
 
 ---
 
-# 🛠 Step 5: Force Plan Regression
+### 🛠 Step 5: Force Plan Regression
 
 Run repeatedly with bad parameters so SQL considers new plan “better”:
 
@@ -101,7 +101,7 @@ END
 
 ---
 
-# 🛠 Step 6: Watch Automatic Plan Correction Kick In
+### 🛠 Step 6: Watch Automatic Plan Correction Kick In
 
 Check tuning recommendations:
 
@@ -118,7 +118,7 @@ FROM sys.dm_db_tuning_recommendations;
 
 ---
 
-# 🛠 Step 7: Verify Query is Using Forced Plan
+### 🛠 Step 7: Verify Query is Using Forced Plan
 
 Run again:
 
@@ -139,7 +139,7 @@ WHERE qsqt.query_sql_text LIKE '%Orders WHERE CustomerID%';
 
 ---
 
-# 📚 Use Case in Real Life
+### 📚 Use Case in Real Life
 
 * **Scenario**: A monthly report suddenly runs 30 minutes instead of 2 minutes because SQL sniffed bad parameter and picked wrong plan.
 * **Without APC**: DBA wakes up at 3 AM, checks Query Store, forces plan manually.
@@ -147,7 +147,7 @@ WHERE qsqt.query_sql_text LIKE '%Orders WHERE CustomerID%';
 
 ---
 
-# ✅ Summary
+### ✅ Summary
 
 * **Query Store** must be ON.
 * **Automatic Plan Correction** must be enabled.
