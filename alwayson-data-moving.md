@@ -1,4 +1,4 @@
-**step-by-step assessment plan** for SQL Server **Always On Availability Groups (AG)** with this setup:
+**Step-by-Step Assessment Plan** for SQL Server **Always On Availability Groups (AG)** with this setup:
 
 * **Region 1 (East)**
 
@@ -16,7 +16,7 @@ we will break the **assessment steps** into **phases** with **in-depth details**
 
 #### 🔍 General Steps for Assessment
 
-### **1. Infrastructure & Network Assessment**
+#### **1. Infrastructure & Network Assessment**
 
 * **Node1 (East – Primary)**
 
@@ -44,7 +44,7 @@ we will break the **assessment steps** into **phases** with **in-depth details**
 
 ---
 
-### **2. Windows Failover Cluster (WSFC) Readiness**
+#### **2. Windows Failover Cluster (WSFC) Readiness**
 
 * Run **Cluster Validation Wizard** on Node1, Node2, Node3.
 * Decide on **quorum configuration**:
@@ -228,7 +228,7 @@ INSERT INTO Orders (OrderID, Item) VALUES (1001, 'Laptop');
 
 ---
 
-## 🔀 Failover Timeline Scenarios
+### 🔀 Failover Timeline Scenarios
 
 ### Case A: Node1 crashes **after T6**
 
@@ -256,7 +256,7 @@ INSERT INTO Orders (OrderID, Item) VALUES (1001, 'Laptop');
 
 ---
 
-## 📊 Timeline Visualization
+### 📊 Timeline Visualization
 
 ```
 T1: App → Node1 (Start Transaction)
